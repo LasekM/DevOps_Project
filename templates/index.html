@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Simple Calculator</h1>
+        <form method="POST">
+            <input type="text" name="num1" placeholder="Enter first number" required>
+            <input type="text" name="num2" placeholder="Enter second number" required>
+            <br><br>
+            <label>
+                <input type="radio" name="operation" value="add" checked> Add
+            </label>
+            <label>
+                <input type="radio" name="operation" value="subtract"> Subtract
+            </label>
+            <label>
+                <input type="radio" name="operation" value="multiply"> Multiply
+            </label>
+            <label>
+                <input type="radio" name="operation" value="divide"> Divide
+            </label>
+            <br><br>
+            <button type="submit">Calculate</button>
+        </form>
+        {% if result is not none %}
+        <h2>Result: {{ result }}</h2>
+        {% endif %}
+    </div>
+</body>
+</html>

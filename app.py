@@ -1,25 +1,34 @@
-from flask import Flask, request
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return "<h1>Prosta aplikacja DevOps</h1><p>Witaj w mojej aplikacji napisanej we Flask!</p>"
+@app.route("/", methods=["GET", "POST"])
+def index():
+    result = ""
+    if request.method == "POST":
+        num1 = request.form.get("num1")
+        num2 = request.form.get("num2")
+        operation = request.form.get("operation")
 
-@app.route('/hello/<name>')
-def hello(name):
-    return f"<h1>Hello, {name}!</h1>"
+        if num1 and num2:
+            try:
+                num1 = float(num1)
+                num2 = float(num2)
+                if operation == "add":
+                    result = num1 + num2
+                elif operation == "subtract":
+                    result = num1 - num2
+                elif operation == "multiply":
+                    result = num1 * num2
+                elif operation == "divide":
+                    if num2 == 0:
+                        result = "Error: Cannot divide by zero."
+                    else:
+                        result = num1 / num2
+            except ValueError:
+                result = "Please enter valid numbers."
 
-@app.route('/form', methods=['GET', 'POST'])
-def form():
-    if request.method == 'POST':
-        return f"<h1>Otrzymano dane: {request.form['data']}</h1>"
-    return '''
-        <form method="post">
-            <input name="data" placeholder="Wpisz coś">
-            <input type="submit">
-        </form>
-    '''
+    return render_template("index.html", result=result)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+if __name__ == "__main__":
+    app.run(debug=True)
